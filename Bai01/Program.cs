@@ -9,12 +9,7 @@ namespace Mang
             Console.Write("Nhap so phan tu cua mang: ");
             int soLuong = NhapVaKiemTra();
 
-            int[] arr = new int[soLuong];
-            for (int i = 0; i < soLuong; i++)
-            {
-                Console.Write($"Nhap phan tu thu {i + 1}: ");
-                arr[i] = int.Parse(Console.ReadLine());
-            }
+            int[] arr = TaoMangNgauNhien(soLuong);
 
             //a) Tong so le
             TongSoLe(arr, soLuong);
@@ -26,7 +21,26 @@ namespace Mang
             SoChinhPhuongNhoNhat(arr, soLuong);
         }
 
-        //Ham tinh tong so le
+        //Ham tao mang ngau nhien va xuat mang de kiem tra
+        private static int[] TaoMangNgauNhien(int n)
+        {
+            Random rand = new Random();
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                //Co the chinh lai gia tri trong khoang mong muon
+                arr[i] = rand.Next(1, 1000);
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write(arr[i] + " ");
+            }
+            Console.WriteLine();
+            return arr;
+        }
+
+        //a) Tính tổng các số lẻ trong mảng
         private static void TongSoLe(int[] arr, int n)
         {
             int tong = 0;
@@ -40,7 +54,7 @@ namespace Mang
             Console.WriteLine($"Tong cac so le trong mang la: {tong}");
         }
 
-        //Ham dem so nguyen to
+        //b) Đếm số nguyên tố trong mảng
         private static void DemSoNguyenTo(int[] arr, int n)
         {
             int count = 0;
@@ -54,7 +68,7 @@ namespace Mang
             Console.WriteLine($"So luong so nguyen to trong mang la: {count}");
         }
 
-        //Ham tim so chinh phuong nho nhat
+        //c) Tìm số chính phương nhỏ nhất (nếu không có hàm trả về -1)
         private static void SoChinhPhuongNhoNhat(int[] arr, int n)
         {
             int min = int.MaxValue;
@@ -79,7 +93,7 @@ namespace Mang
             if (n < 2) return false;
             for (int i = 2; i * i <= n; i++)
             {
-                if (n % 2 == 0)
+                if (n % i == 0)
                 {
                     return false;
                 }

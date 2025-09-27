@@ -14,11 +14,17 @@ namespace NgayTrongTuan
             Console.Write("Nhap vao nam: ");
             int nam = NhapVaKiemTra();
 
-            DateTime date = new DateTime(nam, thang, ngay);
+            bool isValid = DateTime.TryParseExact($"{ngay}/{thang}/{nam}", "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
+
+            if (!isValid)
+            {
+                Console.WriteLine("Ngay thang nam khong hop le.");
+                return;
+            }
+
             string dayOfWeek = date.DayOfWeek.ToString();
 
             string ngayTiengViet = layTenNgayTrongTuan(dayOfWeek);
-
             Console.WriteLine($"Ngay {ngay}/{thang}/{nam} la: {ngayTiengViet}");
         }
 

@@ -10,13 +10,22 @@
             Console.Write("Nhap vao nam: ");
             int nam = NhapVaKiemTra();
 
+            int soNgay = TimSoNgay(thang, nam);
+
+            if (soNgay == 0) return;
+            Console.WriteLine($"Thang {thang} nam {nam} co so ngay la: {soNgay}");
+        }
+
+        //Ham tim so ngay
+        private static int TimSoNgay(int thang, int nam)
+        {
             bool laNhuan = laNamNhuan(nam);
             int soNgay = 0;
 
-            if (thang < 1 || thang > 12)
+            if (thang < 1 || thang > 12 || nam == 0)
             {
                 Console.WriteLine("Nam, thang khong hop le!");
-                return;
+                return 0;
             }
 
             switch (thang)
@@ -51,8 +60,7 @@
                         break;
                     }
             }
-
-            Console.WriteLine($"Thang {thang} nam {nam} co so ngay la: {soNgay}");
+            return soNgay;
         }
 
         //Ham kiem tra

@@ -24,11 +24,11 @@ namespace KiemTraNgayThangNam
             bool hopLe = kiemTraHopLe(ngay, thang, nam);
             if (hopLe)
             {
-                Console.WriteLine($"Ngay {ngay}/{thang}/{nam} hop le");
+                Console.WriteLine("Ngay thang nam hop le!");
             }
             else
             {
-                Console.WriteLine($"Ngay {ngay}/{thang}/{nam} khong hop le. Vui long nhap lai!");
+                Console.WriteLine("Ngay thang nam khong hop le.");
             }
         }
 
@@ -42,6 +42,7 @@ namespace KiemTraNgayThangNam
         {
             bool hopLe = true;
             bool laNhuan = laNamNhuan(nam);
+            if (nam == 0 || thang == 0 || ngay == 0) return false;
             if (thang < 1 || thang > 12 || ngay < 1 || ngay > 31)
             {
                 hopLe = false;

@@ -12,6 +12,9 @@ namespace MaTran
             Console.Write("Nhap so cot: ");
             int m = NhapVaKiemTra();
 
+            Console.Write($"Nhap hang can xoa (0-{n}): ");
+            int k = NhapVaKiemTra();
+
             int[,] maTran = TaoMaTran(n, m);
             InMaTran(maTran);
 
@@ -24,13 +27,13 @@ namespace MaTran
             TongCacSoKhongPhaiSoNguyenTo(maTran);
 
             //
-            maTran = XoaMotHang(maTran);
-            Console.WriteLine("Sau khi xoa: ");
+            maTran = XoaMotHang(maTran, k);
+            Console.WriteLine($"\nSau khi xoa hang {k}: ");
             InMaTran(maTran);
 
             //
-            maTran = XoaCotCoTongCaoNhat(maTran);
-            Console.WriteLine("Sau khi xoa: ");
+            maTran = XoaCotCoPhanTuLonNhat(maTran);
+            Console.WriteLine("\nSau khi xoa cot: ");
             InMaTran(maTran);
         }
 
@@ -49,7 +52,7 @@ namespace MaTran
             return maTran;
         }
 
-        //Ham in ma tran
+        //a) Xuất ma trận
         private static void InMaTran(int[,] maTran)
         {
             Console.WriteLine("================= Ma Tran =================");
@@ -67,6 +70,8 @@ namespace MaTran
         }
 
         //Cac ham tim kiem
+
+        //b. Tìm phần tử lớn nhất/nhỏ nhất
         private static void PhanTuLonNhat(int[,] maTran)
         {
             int max = int.MinValue;
@@ -103,7 +108,7 @@ namespace MaTran
             Console.WriteLine($"Phan tu nho nhat trong ma tran la: {min}");
         }
 
-        //Ham tim hang co tong lon nhat
+        //c) Tìm dòng có tổng lớn nhất
         private static void HangCoTongLonNhat(int[,] maTran)
         {
             long maxSum = int.MinValue;
@@ -127,10 +132,10 @@ namespace MaTran
                 }
             }
 
-            Console.WriteLine($"\nHang co tong lon nhat la hang {hangMax} voi tong la: {maxSum}");
+            Console.WriteLine($"\nHang co tong lon nhat la hang: {hangMax}");
         }
 
-        //Ham tinh tong cac so khong phai so nguyen to
+        //d) Tính tổng các số không phải là số nguyên tố
         private static void TongCacSoKhongPhaiSoNguyenTo(int[,] maTran)
         {
             long tong = 0;
@@ -146,21 +151,19 @@ namespace MaTran
                     }
                 }
             }
-            Console.WriteLine($"\nTong cac so khong phai so nguyen to trong ma tran la: {tong}");
+            Console.WriteLine($"\nTong cac so khong phai so nguyen to trong ma tran la: {tong}\n");
         }
 
-        //Ham xoa mot hang
-        private static int[,] XoaMotHang(int[,] maTran)
+        //e) Xóa dòng thứ k trong ma trận
+        private static int[,] XoaMotHang(int[,] maTran, int hangCanXoa)
         {
             int soHang = maTran.GetLength(0);
             int soCot = maTran.GetLength(1);
-
-            Console.Write($"\nNhap vao hang can xoa (1-{soHang}): ");
-            int k = NhapVaKiemTra() - 1;
+            int k = hangCanXoa - 1; // Chuyen ve chi so bat dau tu 0
 
             if (k < 0 || k >= soHang)
             {
-                Console.WriteLine("Hang khong hop le!");
+                Console.WriteLine("So hang can xoa khong hop le!");
                 return maTran;
             }
 
@@ -180,8 +183,8 @@ namespace MaTran
             return maTranMoi;
         }
 
-        //Ham xoa cot co phan tu lon nhat
-        private static int[,] XoaCotCoTongCaoNhat(int[,] maTran)
+        //f) Xóa cột chứa phần tử lớn nhất trong ma trận
+        private static int[,] XoaCotCoPhanTuLonNhat(int[,] maTran)
         {
             int soHang = maTran.GetLength(0);
             int soCot = maTran.GetLength(1);
@@ -223,7 +226,7 @@ namespace MaTran
             if (n < 2) return false;
             for (int i = 2; i * i <= n; i++)
             {
-                if (n % 2 == 0)
+                if (n % i == 0)
                 {
                     return false;
                 }
